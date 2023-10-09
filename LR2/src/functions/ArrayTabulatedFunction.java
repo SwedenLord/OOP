@@ -2,9 +2,10 @@ package functions;
 
 import java.util.Arrays;
 
-public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
-    private final double[] xValues;
-    private final double[] yValues;
+public class ArrayTabulatedFunction extends AbstractTabulatedFunction implements Insertable{
+    private double[] xValues;
+    private double[] yValues;
+    protected int count;
 
     ArrayTabulatedFunction(double[] xValues, double[] yValues) {
         this.xValues = Arrays.copyOf(xValues, xValues.length);
@@ -151,5 +152,23 @@ public class ArrayTabulatedFunction extends AbstractTabulatedFunction {
     public double rightBound()
     {
         return xValues[count - 1];
+    }
+
+    public void insert(double x, double y) {
+        for (int i = 0; i < xValues.length; ++i) {
+            if (xValues[i] == x) {
+                yValues[i] = y;
+                break;
+            }
+        }
+        double[] NewxValues = new double[count + 1];
+        double[] NewyValues = new double[count + 1];
+        ++count;
+        NewxValues = Arrays.copyOf(xValues, count);
+        NewyValues = Arrays.copyOf(yValues, count);
+        NewxValues[count - 1] = x;
+        NewyValues[count - 1] = y;
+        this.xValues = Arrays.copyOf(NewxValues, count);
+        this.yValues = Arrays.copyOf(NewyValues, count);
     }
 }
