@@ -10,10 +10,10 @@ class Node{
         this.y=y;
     }
 }
-public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements TabulatedFunction{
+public class LinkedListTabulatedFunction extends AbstractTabulatedFunction implements Removable,TabulatedFunction{
     private Node head;
     protected int count;
-    private void addNode(double x,double y){
+    protected void addNode(double x,double y){
         Node newNode= new Node(x,y);
         if (head==null){
             head=newNode;
@@ -200,5 +200,20 @@ public class LinkedListTabulatedFunction extends AbstractTabulatedFunction imple
             }
         }
         return result;
+    }
+
+    public void remove(int index) {
+        Node temp = head;
+        Node prev = null;
+        if (temp != null && temp.x == getX(index) && temp.y == getY(index)) {
+            head = temp.next;
+            return;
+        }
+        while (temp != null && temp.x != getX(index) && temp.y != getY(index)) {
+            prev = temp;
+            temp = temp.next;
+        }
+        if (temp == head) return;
+        prev.next = temp.next;
     }
 }
